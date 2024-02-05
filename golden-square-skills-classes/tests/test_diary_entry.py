@@ -62,7 +62,7 @@ when you use input a number of words per minute a person can read the reading_ti
 """
 def test_reading_time_500_words_200_wpm():
     t_diaryentry = DiaryEntry(test_title, test_contents_long)
-    assert t_diaryentry.reading_time(200) == "approx. 0:02:30"
+    assert t_diaryentry.reading_time(200) == "This will take approximately 0:02:30 to read"
 
 """
 when you use reading_chunk for the first time it should return a chunk of contents equal to the length of time required to read at the provided reading speed
@@ -76,5 +76,21 @@ when you use reading_chunk for a second time it should return the next chunk of 
 """
 def test_reading_chunk_returns_next_chunk():
     t_diaryentry = DiaryEntry(test_title, test_contents_long)
-    t_diaryentry.reading_chunk(57,1)
+    t_diaryentry.reading_chunk(62,1)
     assert t_diaryentry.reading_chunk(55,1) == 'So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.'
+
+"""
+when you get to the end of the text, the text should end at the end of the text
+"""
+def test_ending_at_end():
+    t_diaryentry = DiaryEntry(test_title, test_contents_long)
+    t_diaryentry.reading_chunk(200,2.3)
+    assert t_diaryentry.reading_chunk(200,1) == "thought Alice to herself, `after such a fall as this, I shall think nothing of tumbling down stairs! How brave they'll all think me at home! Why, I wouldn't say anything about it, even if I fell off the top"
+
+"""
+when you get to the end of the text the next reading chunk should start at the beginning
+"""
+def test_starting_from_beginning():
+    t_diaryentry = DiaryEntry(test_title, test_contents_long)
+    t_diaryentry.reading_chunk(200,3)
+    assert t_diaryentry.reading_chunk(20,1) == "CHAPTER I. Down the Rabbit-Hole Alice was beginning to get very tired of sitting by her sister on the bank,"
