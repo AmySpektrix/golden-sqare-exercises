@@ -24,9 +24,9 @@ class DiaryEntry:
         return f"This will take approximately {formatted_time} to read"
 
     def reading_chunk(self, wpm, minutes):
-        if self.reading_chunk_counter > self.string_length:
+        if self.reading_chunk_counter >= self.string_length:
             self.reading_chunk_counter = 0
         chunk_start = self.reading_chunk_counter
         chunk_end = self.reading_chunk_counter + int(round((wpm * minutes),0))
         self.reading_chunk_counter = chunk_end
-        return ' '.join(self.split_string[chunk_start:chunk_end])       
+        return ' '.join(self.split_string[chunk_start:chunk_end])
