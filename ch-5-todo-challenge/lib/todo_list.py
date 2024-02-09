@@ -12,5 +12,6 @@ class TodoList:
         return [task for task in self.main_list if task.complete==True]
     
     def give_up(self):
-        [task.mark_complete() for task in self.main_list]
+        for task in self.main_list:
+            task.mark_complete()
 
